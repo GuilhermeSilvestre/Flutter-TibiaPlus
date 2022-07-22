@@ -33,25 +33,26 @@ class Highscores extends StatefulWidget {
 
 class _HighscoresState extends State<Highscores> {
   final List<String> items3 = [
-    'knights',
-    'paladins',
-    'sorcerers',
-    'druids',
-    'all',
+    'All',
+    'Knights',
+    'Paladins',
+    'Sorcerers',
+    'Druids',
   ];
 
   final List<String> items2 = [
-    'experience',
-    'axefighting',
-    'clubfighting',
-    'swordfighting',
-    'distancefighting',
-    'shielding',
-    'fistfighting',
-    'fishing',
-    'achievements',
-    'charmpoints',
-    'loyaltypoints',
+    'Experience',
+    'Axe',
+    'Club',
+    'Sword',
+    'Distance',
+    'Shielding',
+    'Magic Level',
+    'Fist',
+    'Fishing',
+    'Achievements',
+    'Charm',
+    'Loyalty',
   ];
   final List<String> items = [
     'Adra',
@@ -111,6 +112,31 @@ class _HighscoresState extends State<Highscores> {
     'Pacera',
     'Peloria',
     'Premia',
+    'Quelibra',
+    'Quintera',
+    'Refugia',
+    'Reinobra',
+    'Seanera',
+    'Secura',
+    'Serdebra',
+    'Solidera',
+    'Suna',
+    'Telera',
+    'Tembra',
+    'Thyria',
+    'Trona',
+    'Utobra',
+    'Venebra',
+    'Versa',
+    'Visabra',
+    'Vunira',
+    'Wintera',
+    'Wizera',
+    'Xandebra',
+    'Yonabra',
+    'Zenobra',
+    'Zuna',
+    'Zunera',
   ];
 
   String? selectedValue;
@@ -238,6 +264,15 @@ class _HighscoresState extends State<Highscores> {
   }
 
   buscar() async {
+    if (category == 'Axe') category = 'axefighting';
+    if (category == 'Club') category = 'clubfighting';
+    if (category == 'Sword') category = 'swordfighting';
+    if (category == 'Distance') category = 'distancefighting';
+    if (category == 'Magic Level') category = 'magiclevel';
+    if (category == 'Charm') category = 'charmpoints';
+    if (category == 'Fist') category = 'fistfighting';
+    if (category == 'Loyaty') category = 'loyatypoints';
+
     url = 'https://api.tibiadata.com/v3/highscores/$world/$category/$vocation';
 
     Network api = Network(url);
@@ -257,7 +292,7 @@ class _HighscoresState extends State<Highscores> {
     for (int i = 1; i <= 20; i++) {
       charLevels[i] =
           tibiaData['highscores']['highscore_list'][i]['level'].toString();
-      print(charLevels[i]);
+      //print(charLevels[i]);
     }
     for (int i = 1; i <= 20; i++) {
       charVocs[i] = tibiaData['highscores']['highscore_list'][i]['vocation'];
@@ -464,7 +499,6 @@ class _HighscoresState extends State<Highscores> {
                           setState(() {
                             selectedValue2 = value as String;
                             category = selectedValue2!;
-                            print(category);
                           });
                         },
                         icon: const Icon(
@@ -562,7 +596,6 @@ class _HighscoresState extends State<Highscores> {
                           setState(() {
                             selectedValue3 = value as String;
                             vocation = selectedValue3!;
-                            print(vocation);
                           });
                         },
                         icon: const Icon(
@@ -599,6 +632,39 @@ class _HighscoresState extends State<Highscores> {
                         offset: const Offset(-20, 0),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if (world != '' && category != '' && vocation != '') {
+                        setState(() async {
+                          setState(() => loading = true);
+                          buscar();
+                          await Future.delayed(Duration(seconds: 1));
+                          setState(() => loading = false);
+                          await Future.delayed(Duration(seconds: 1));
+                          refresh();
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(
+                        220,
+                        60,
+                      ),
+                      textStyle: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.search,
+                      size: 40,
+                    ),
+                    label: Text('GO'),
                   ),
                   SizedBox(
                     height: 20,
@@ -686,36 +752,6 @@ class _HighscoresState extends State<Highscores> {
                   if (loading) spinkit,
                   SizedBox(
                     height: 20,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      if (world != '' && category != '' && vocation != '') {
-                        setState(() async {
-                          setState(() => loading = true);
-                          buscar();
-                          await Future.delayed(Duration(seconds: 1));
-                          setState(() => loading = false);
-                          await Future.delayed(Duration(seconds: 1));
-                          refresh();
-                        });
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(
-                        220,
-                        60,
-                      ),
-                      textStyle: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.search,
-                      size: 40,
-                    ),
-                    label: Text('GO'),
                   ),
                 ],
               ),

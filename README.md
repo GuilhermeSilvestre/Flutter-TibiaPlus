@@ -4,4 +4,5 @@
 
 
 https://tibiadata.com/
+
 https://docs.tibiadata.com/
