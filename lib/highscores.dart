@@ -667,6 +667,10 @@ class _HighscoresState extends State<Highscores> {
                     label: Text('GO'),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  if (loading) spinkit,
+                  SizedBox(
                     height: 20,
                   ),
                   if (encontrou == 1)
@@ -749,7 +753,6 @@ class _HighscoresState extends State<Highscores> {
                             charSkills[19]),
                       ],
                     ),
-                  if (loading) spinkit,
                   SizedBox(
                     height: 20,
                   ),

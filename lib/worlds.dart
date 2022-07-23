@@ -36,18 +36,426 @@ class _WorldsState extends State<Worlds> {
   bool loading = false;
 
   int encontrou = 0;
-  int charLevel = -1;
-
-  dynamic charName = '';
-  dynamic charSex = '';
-  dynamic charVoc = '';
-  dynamic charWorld = '';
-  dynamic charComment = 'Não possui comentário.';
-  dynamic charCreated = 'Data de criação oculta';
-  dynamic charLastLogin = 'Último login oculto';
-  dynamic charAccStatus = '';
 
   dynamic tibiaData;
+  dynamic allPlayersOnline;
+
+  dynamic worldName = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+  dynamic worldStatus = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+  dynamic worldType = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+  dynamic worldPlayers = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+  dynamic worldLocation = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
 
   String url = '';
 
@@ -57,39 +465,49 @@ class _WorldsState extends State<Worlds> {
     });
   }
 
-  buscarChar() async {
-    url = 'https://api.tibiadata.com/v3/character/$playerName';
+  buscar() async {
+    url = 'https://api.tibiadata.com/v3/worlds';
 
     Network api = Network(url);
 
     tibiaData = await api.getData();
 
-    charLevel = tibiaData['characters']['character']['level'];
+    allPlayersOnline = tibiaData['worlds']['players_online'].toString();
 
-    if (tibiaData != -1 && charLevel != 0) {
+    worldName[0] = tibiaData['worlds']['regular_worlds'][0]['name'];
+    worldPlayers[0] =
+        tibiaData['worlds']['regular_worlds'][0]['players_online'].toString();
+    worldStatus[0] = tibiaData['worlds']['regular_worlds'][0]['status'];
+    worldType[0] = tibiaData['worlds']['regular_worlds'][0]['pvp_type'];
+    worldLocation[0] = tibiaData['worlds']['regular_worlds'][0]['location'];
+
+    for (int i = 1; i <= 80; i++) {
+      worldName[i] = tibiaData['worlds']['regular_worlds'][i]['name'];
+    }
+
+    for (int i = 1; i <= 80; i++) {
+      worldPlayers[i] =
+          tibiaData['worlds']['regular_worlds'][i]['players_online'].toString();
+    }
+
+    for (int i = 1; i <= 80; i++) {
+      worldStatus[i] = tibiaData['worlds']['regular_worlds'][i]['status'];
+    }
+
+    for (int i = 1; i <= 80; i++) {
+      worldType[i] = tibiaData['worlds']['regular_worlds'][i]['pvp_type'];
+    }
+
+    for (int i = 1; i <= 80; i++) {
+      worldLocation[i] = tibiaData['worlds']['regular_worlds'][i]['location'];
+    }
+
+    if (tibiaData != -1) {
       encontrou = 1;
-      print('Encontrou um char');
-      charName = tibiaData['characters']['character']['name'];
-      charLevel = tibiaData['characters']['character']['level'];
-      charVoc = tibiaData['characters']['character']['vocation'];
-      charSex = tibiaData['characters']['character']['sex'];
-      charWorld = tibiaData['characters']['character']['world'];
-
-      if (tibiaData['characters']['character']['comment'] != null) {
-        charComment = tibiaData['characters']['character']['comment'];
-      }
-      if (tibiaData['characters']['character']['account_status'] != null) {
-        charAccStatus = tibiaData['characters']['character']['account_status'];
-      }
-      if (tibiaData['characters']['character']['last_login'] != null) {
-        charLastLogin = tibiaData['characters']['character']['last_login'];
-      }
-      if (tibiaData['characters']['account_information']['created'] != null) {
-        charCreated = tibiaData['characters']['account_information']['created'];
-      }
+      print('Deu ceto');
     } else {
       encontrou = -1;
-      print('Não encontrou nenhum char');
+      print('Não deu certo');
     }
     refresh();
   }
@@ -123,14 +541,9 @@ class _WorldsState extends State<Worlds> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
-                  Text(
-                    'Select the tibia character you are looking for:',
-                    style: TextStyle(
-                      color: Color(0xff123456),
-                    ),
-                  ),
+                  if (loading) spinkit,
                   SizedBox(
                     height: 20,
                   ),
@@ -139,76 +552,73 @@ class _WorldsState extends State<Worlds> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Nome: $charName',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Status: $charAccStatus',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Level: $charLevel',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Sex: $charSex',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Vocação: $charVoc',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'World: $charWorld',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Comentário: $charComment',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Criado em: $charCreated',
-                          style: dadosChar,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Último Login: $charLastLogin',
-                          style: dadosChar,
+                        RichText(
+                          text: TextSpan(
+                            style: charsOnline,
+                            children: <TextSpan>[
+                              new TextSpan(text: 'Players Online in Tibia: '),
+                              new TextSpan(
+                                text: allPlayersOnline,
+                                style: charsOnline2,
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 20,
                         ),
+                        Text(
+                          'World Name: ${worldName[0]}',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Status: ${worldStatus[0]}',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Players Online: ${worldPlayers[0]}',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'World Type: ${worldType[0]}',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Location: ${worldLocation[0]}',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '--------------------',
+                          style: worlds,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        for (int i = 1; i <= 80; i++)
+                          world(worldName[i], worldStatus[i], worldPlayers[i],
+                              worldType[i], worldLocation[i]),
                       ],
                     ),
                   if (encontrou == -1)
                     Column(
                       children: [
                         Text(
-                          'Não encontramos nenhum char',
+                          'Error searching Tibia Worlds',
                           style: dadosChar,
                         ),
                         SizedBox(
@@ -216,33 +626,6 @@ class _WorldsState extends State<Worlds> {
                         ),
                       ],
                     ),
-                  if (loading) spinkit,
-                  Container(
-                    padding: EdgeInsets.all(10.0),
-                    child: TextField(
-                      scrollPadding: EdgeInsets.only(bottom: 140),
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Enter character name',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      onChanged: (value) {
-                        playerName = value;
-                      },
-                    ),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -251,9 +634,11 @@ class _WorldsState extends State<Worlds> {
                       FocusManager.instance.primaryFocus?.unfocus();
                       setState(() async {
                         setState(() => loading = true);
-                        buscarChar();
+                        buscar();
                         await Future.delayed(Duration(seconds: 1));
                         setState(() => loading = false);
+                        await Future.delayed(Duration(seconds: 1));
+                        refresh();
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -267,10 +652,10 @@ class _WorldsState extends State<Worlds> {
                       ),
                     ),
                     icon: Icon(
-                      Icons.search,
+                      Icons.add_circle,
                       size: 40,
                     ),
-                    label: Text('Find Player'),
+                    label: Text('Search all Worlds'),
                   ),
                   Image.asset(
                     'images/tibiaicon.png',

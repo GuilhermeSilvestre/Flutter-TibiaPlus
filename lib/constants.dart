@@ -19,6 +19,24 @@ const dadosChar = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const charsOnline = TextStyle(
+  color: Color(0xffbd1713),
+  fontSize: 23,
+  fontWeight: FontWeight.bold,
+);
+
+const charsOnline2 = TextStyle(
+  color: Color(0xff03c04a),
+  fontSize: 23,
+  fontWeight: FontWeight.bold,
+);
+
+const worlds = TextStyle(
+  color: Color(0xff4566c5),
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);
+
 const spinkit = SpinKitPouringHourGlassRefined(
   color: Color(0xff823983),
   size: 80.0,
@@ -68,44 +86,53 @@ Column rank(name, level, voc, skil) {
   );
 }
 
-Column ranking = Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      'Name: ',
-      style: dadosChar,
-    ),
-    SizedBox(
-      height: 20,
-    ),
-    Text(
-      'Level: ',
-      style: dadosChar,
-    ),
-    SizedBox(
-      height: 20,
-    ),
-    Text(
-      'Voc: ',
-      style: dadosChar,
-    ),
-    SizedBox(
-      height: 20,
-    ),
-    Text(
-      'Skill: ',
-      style: dadosChar,
-    ),
-    SizedBox(
-      height: 20,
-    ),
-    Text(
-      '--------------------',
-      style: dadosChar,
-    ),
-    SizedBox(
-      height: 20,
-    ),
-  ],
-);
+Column world(name, status, players, type, location) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'World Name: $name',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'Status: $status',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'Players Online: $players',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'World Type: $type',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'Location: $location',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        '--------------------',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 20,
+      ),
+    ],
+  );
+}

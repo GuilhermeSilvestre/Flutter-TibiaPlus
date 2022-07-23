@@ -9,7 +9,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'highscores.dart';
 import 'worlds.dart';
 import 'world.dart';
-import 'killstatistics.dart';
 
 final GlobalKey<ScaffoldState> abrirMenu = GlobalKey();
 
@@ -208,27 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                   title: Text(
-                    'World (específico)',
-                    style: subMenus,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return KillStatistics();
-                        },
-                      ),
-                    );
-                  },
-                  title: Text(
-                    'Kill Statistics',
+                    'World (specific)',
                     style: subMenus,
                   ),
                 ),
