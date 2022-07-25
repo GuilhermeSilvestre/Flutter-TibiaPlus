@@ -346,7 +346,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Text(
-                          'Não encontramos nenhum char',
+                          'We have not found any char',
                           style: dadosChar,
                         ),
                         SizedBox(

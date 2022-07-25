@@ -31,6 +31,12 @@ const charsOnline2 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const worldInfo = TextStyle(
+  color: Color(0xff2a7a80),
+  fontSize: 23,
+  fontWeight: FontWeight.bold,
+);
+
 const worlds = TextStyle(
   color: Color(0xff4566c5),
   fontSize: 20,
@@ -132,6 +138,43 @@ Column world(name, status, players, type, location) {
       ),
       SizedBox(
         height: 20,
+      ),
+    ],
+  );
+}
+
+Column worldPlayersSearch(name, level, voc) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'World Name: $name',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'Level: $level',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        'Vocation: $voc',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        '--------------------',
+        style: worlds,
+      ),
+      SizedBox(
+        height: 10,
       ),
     ],
   );
